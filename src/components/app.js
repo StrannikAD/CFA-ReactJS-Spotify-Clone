@@ -1,47 +1,38 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import styles from './app.css';
 import SearchBar from './SearchBar/SearchBar';
+import styles from './app.css';
 import searchSpotify from '../utils/searchSpotify';
 import SongItem from './SongItem/SongItem';
-
-=======
->>>>>>> 7a1bbbc1dce8be133e4cc95730e57520815a09f5
+import SongList from './SongList/SongList';
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      initialMessage: 'greeting',
-<<<<<<< HEAD
       song: '',
-      tracks: [],
+      tracks: null,
+      selectedTrack: null,
     };
   }
 
   fetchSongs = () => {
-    searchSpotify(this.state.song)
-      .then(({ tracks }) => this.setState({ tracks }));
+    searchSpotify(this.state.song).then(({ tracks }) => this.setState({ tracks }));
   }
 
   render() {
-    const { tracks } = this.state;
-    console.log('tracks', tracks);
+    const { tracks, selectedTrack } = this.state;
     return (
       <div className={styles.root}>
-        <SearchBar updateText={(song) => this.setState({ song })} fetchSongs={this.fetchSongs} />
-        {tracks.items && <SongItem songData={tracks.items[0]} />}
-=======
-    };
-  }
-
-  render() {
-    const { initialMessage } = this.state;
-    return (
-      <div>
-        {initialMessage}
->>>>>>> 7a1bbbc1dce8be133e4cc95730e57520815a09f5
+        <SearchBar
+          updateText={(song) => this.setState({ song })}
+          fetchSongs={this.fetchSongs}
+        />
+        {this.state.tracks ? <SongItem songData={selectedTrack || tracks.items[0]} /> : null}
+        {this.state.tracks ? <SongList
+          selectSong={(song) => this.setState({ selectedTrack: song })}
+          listOfSongs={tracks.items}
+        /> : null}
       </div>
     );
   }

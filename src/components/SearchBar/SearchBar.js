@@ -6,7 +6,7 @@ const SearchBar = (props) => (
     <input className={styles.input} onChange={(e) => props.updateText(e.target.value)} />
     <button className={styles.button} onClick={props.fetchSongs}>Get Songs</button>
   </div>
-  );
+);
 
 SearchBar.propTypes = {
   updateText: PropTypes.func,
